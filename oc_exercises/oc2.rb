@@ -1,8 +1,8 @@
 # OC2. Money, money, money
 
-# We were going back home yesterday. Second week, Monday, rain, new teacher... But just before getting into the subway, we found a bag full of
-# money in different currencies! So we skipped TV shows for now (we’ll be back sometime, don’t worry!) because, don’t know why, we were
-# suddenly interested in money.
+# We were going back home yesterday. Second week, Monday, rain, new teacher... But just before getting into the subway, we found a bag
+# full of money in different currencies! So we skipped TV shows for now (we’ll be back sometime, don’t worry!) because, don’t know why,
+# we were suddenly interested in money.
 
 # So we got to our local dealer, knowing that either way he will have a cut of the deal, but anyway we asked him about the current rates.
 # And instead of using his services, we decided we wanted to get home, and write an awesome currency converter so we could know how much
@@ -19,20 +19,44 @@
 # Feel free to add support for your country currency! :)
 
 class TheBanker
-  TO_EURO = [
+  TO_EURO = {
     usd: 0.77818,
     gbp: 1.27341,
     cad: 0.70518,
     aud: 0.69052
-  ]
-
-  FROM_EURO = [
+  }
+  FROM_EURO = {
     usd: 1.28356,
     gbp: 0.78478,
     cad: 1.41613,
     aud: 1.44651
-  ]
-
+  }
   def self.convert(amount, from_currency, to_currency)
+    case
+    when from_currency == to_currency
+      return amount
+    when
+      from_currency == "eur"
+      return from_euro(amount,to_currency.to_sym)
+    when
+      to_currency == "eur"
+      return to_euro(amount,from_currency.to_sym)
+    else
+      return from_euro(
+        to_euro(
+          amount,
+        from_currency.to_sym),
+      to_currency.to_sym)
+    end
+  end
+
+  private
+
+  def self.to_euro(amount,from_currency)
+    (amount * TO_EURO[from_currency]).round(2)
+  end
+
+  def self.from_euro(amount,to_currency)
+    (amount * FROM_EURO[to_currency]).round(2)
   end
 end
