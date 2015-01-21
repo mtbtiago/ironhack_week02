@@ -12,54 +12,69 @@
 # 4. GET '/results' will get a "term" parameter, and will return the number of results for a search using that term.
 # 5. GET '/now' will print the current date and time. Because sometimes it's useful.
 
+require 'imdb'
 require 'pstore'
 require 'ap'
-require 'sinatra'
-set :port, 3001
-set :bind, '0.0.0.0'
 
 class Movie < Struct.new(:id,:title,:rating,:year)
-
-  def to_s
-    "IMDB ID: #{id}. #{title}. Rating: #{rating}. Year: #{year}"
-  end
 end
 
 class SL8
-  attr_reader :movies
-
+  # attr_reader :movies
   def initialize
-    @movies_pstore = PStore.new("movies_250.pstore")
-    @movies = {}
-    load_movies_pstore
+    @movies = PStore.new("movies_250.pstore")
+    @movies_imdb = {}
+    # load_movies_coded
+    # load_movies_pstore
+    load_movies_imdb
+    save_movies_pstore
 
-    # @movies.values.each do |movie|
-    #   ap movie.to_s
+    # @movies_imdb.each do |k|
+    #   puts k
     # end
   end
 
   private
 
-    def load_movies_pstore
-    @movies_pstore.transaction do
-      @movies_pstore.roots.each do |item|
-        @movies[item] = Movie.new(
-          item,
-          @movies_pstore[item][1].gsub(/\d{1,3}\.\n\s+/,""),
-          @movies_pstore[item][2],
-          @movies_pstore[item][3])
-      end
-      @movies_pstore.commit
+  def load_movies_imdb
+  	i = 0
+    Imdb::Top250.new.movies.each do |movie|
+      movie = Movie.new(movie.id,movie.title,movie.rating,movie.year)
+      puts i
+      ap movie
+      @movies_imdb[movie.id] = movie
+      i += 1
     end
+  end
+
+  def save_movies_pstore
+    @movies.transaction do
+      @movies_imdb.keys.each do |key|
+        @movies[key.to_sym] = @movies_imdb[key]
+        puts @movies_imdb[key]
+      end
+      @movies.commit
+    end
+  end
+
+  def load_movies_pstore
+    @movies.transaction do
+      @movies.roots.each do |item|
+        @movies_imdb[item] = @movies[item]
+      end
+      @movies.commit
+    end
+  end
+
+  def load_movies_coded
+    # Imdb::Top250.new.movies.each do |movie|
+    #   @movies_imdb[movie.id] = Movie.new(movie.id,movie.title,movie.rating,movie.year)
+    # end
+    @movies_imdb["1"] = Movie.new("1","movie.title1","movie.rating1","movie.year1")
+    @movies_imdb["2"] = Movie.new("2","movie.title2","movie.rating2","movie.year2")
+    @movies_imdb["3"] = Movie.new("3","movie.title3","movie.rating3","movie.year3")
   end
 end
 
-
 ### main
 sl8 = SL8.new
-
-get '/top' do
-  @movies = sl8.movies.values
-  @limit = params[:limit] ||= 250
-  erb :sl8_top
-end

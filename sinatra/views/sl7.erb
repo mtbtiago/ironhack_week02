@@ -6,10 +6,12 @@
 <h1>Let's mount your bike</h1>
 </header>
 <ul>
-<li>frame               : $   1500.00</li>
-<li>fork                : $    900.00</li>
+<% @parts.each do|part| %>
+<li><%= part.to_s %></li>
+<% end %>
 </ul>
-<strong>Total               : $   2400.00</strong>
+<strong><%= @total_str %></strong>
 </footer
 ></body>
 </html>
+

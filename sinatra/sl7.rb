@@ -14,36 +14,52 @@
 require 'sinatra'
 require 'sinatra/reloader'
 
+class Formatter
+  def self.formatCurr(value)
+    return "$#{"%#10.2f" % value.round(2)}"
+  end
+
+  def self.formatDescCurr(desc, curr)
+    return "#{"%-20s" % desc}: #{formatCurr(curr)}"
+  end
+
+end
+
+class Part
+  attr_reader :name, :price
+  def initialize(name,price)
+    @name = name
+    @price = price
+  end
+
+  def to_s
+    Formatter.formatDescCurr(@name,@price)
+  end
+end
+
 class YourBike
   def initialize
     @parts = {}
   end
 
-  def to_s
-    return "No mounted bike yet" if @parts.size == 0
-    total = 0
-    @parts.keys.reduce("<!DOCTYPE html><html><head><meta charset=\"utf-8\"><title>Ironhack Prework landing page</title>
-</head><body style=\"font-family: courier\"><header><h1>Let's mount your bike</h1></header><ol>"){|result,key|
-      price = @parts[key].to_f
-      total += price
-      result += "<li>"+formatDescCurr(key,price)+"</li>"
-    }+"</ol>"+formatDescCurr("<strong>Total",total)+"</strong></footer></body></html>"
+  def get_total
+    # return "No mounted bike yet" if @parts.size == 0
+    @parts.keys.reduce(0) {|total,key|
+      total += @parts[key].price
+    }
   end
 
   def add_part(part,price)
-    @parts[part] = price
+    @parts[part] = Part.new(part,price.to_f)
   end
 
-  private
-
-  def formatCurr(value)
-    return "$#{"%#10.2f" % value.round(2)}"
+  def get_part(name)
+    @parts[name]
   end
 
-  def formatDescCurr(desc, curr)
-    return "#{"%-20s" % desc}: #{formatCurr(curr)}"
+  def get_parts
+  	@parts.values
   end
-
 end
 
 set :port, 3001
@@ -54,7 +70,10 @@ set :bind, '0.0.0.0'
 bike = YourBike.new
 
 get '/' do
-  bike.to_s
+  # @list = bike.to_s
+  @total_str = Formatter.formatDescCurr("Total",bike.get_total)
+  @parts = bike.get_parts
+  erb :sl7
 end
 
 post '/parts/add' do

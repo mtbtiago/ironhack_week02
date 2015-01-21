@@ -1,0 +1,240 @@
+{
+	"id": "4b021242-4dec-ff83-3b5c-491af9672568",
+	"name": "Sinatra",
+	"description": "",
+	"order": [],
+	"folders": [
+		{
+			"id": "49f22d20-0dbe-f393-1387-1b11fde32f8e",
+			"name": "SL6",
+			"description": "",
+			"order": [
+				"ba4d02dd-94af-e01b-90af-99cbbb426ce3",
+				"e9673c18-ae2c-436d-f7dd-4889c005391e",
+				"f4fa5cc5-0df3-c7f1-9d34-3473f068fe07"
+			],
+			"collection_name": "Sinatra",
+			"collection_id": "4b021242-4dec-ff83-3b5c-491af9672568"
+		},
+		{
+			"id": "25f9a814-462a-6ac7-b9f7-155ccfb633ea",
+			"name": "SL7",
+			"description": "",
+			"order": [
+				"af689405-a9cd-5af2-c30a-c6258d6614e5",
+				"45b625a9-3779-9e59-be30-8c563b9d489e",
+				"195eb5e6-bd38-6cef-c451-f810a4cc4a76"
+			],
+			"collection_name": "Sinatra",
+			"collection_id": "4b021242-4dec-ff83-3b5c-491af9672568"
+		}
+	],
+	"timestamp": 1421832702505,
+	"synced": false,
+	"remoteLink": "",
+	"requests": [
+		{
+			"id": "195eb5e6-bd38-6cef-c451-f810a4cc4a76",
+			"headers": "",
+			"url": "localhost:3001/parts/add",
+			"pathVariables": {},
+			"preRequestScript": "",
+			"method": "POST",
+			"data": [
+				{
+					"key": "part",
+					"value": "fork",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "price",
+					"value": "900",
+					"type": "text",
+					"enabled": true
+				}
+			],
+			"dataMode": "params",
+			"name": "add fork",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1421842237119,
+			"version": 2,
+			"responses": [],
+			"tests": "",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"collectionId": "4b021242-4dec-ff83-3b5c-491af9672568",
+			"synced": false
+		},
+		{
+			"id": "45b625a9-3779-9e59-be30-8c563b9d489e",
+			"headers": "",
+			"url": "localhost:3001/parts/add",
+			"pathVariables": {},
+			"preRequestScript": "",
+			"method": "POST",
+			"data": [
+				{
+					"key": "part",
+					"value": "frame",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "price",
+					"value": "1500",
+					"type": "text",
+					"enabled": true
+				}
+			],
+			"dataMode": "params",
+			"name": "add frame",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1421840773807,
+			"version": 2,
+			"responses": [],
+			"tests": "",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"collectionId": "4b021242-4dec-ff83-3b5c-491af9672568",
+			"synced": false
+		},
+		{
+			"id": "af689405-a9cd-5af2-c30a-c6258d6614e5",
+			"headers": "",
+			"url": "localhost:3001/",
+			"pathVariables": {},
+			"preRequestScript": "",
+			"method": "GET",
+			"data": [
+				{
+					"key": "name",
+					"value": "My way",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "artist",
+					"value": "Frank Sinatra",
+					"type": "text",
+					"enabled": true
+				}
+			],
+			"dataMode": "params",
+			"name": "get parts",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1421840724715,
+			"version": 2,
+			"responses": [],
+			"tests": "",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"collectionId": "4b021242-4dec-ff83-3b5c-491af9672568",
+			"synced": false
+		},
+		{
+			"id": "ba4d02dd-94af-e01b-90af-99cbbb426ce3",
+			"headers": "",
+			"url": "localhost:3001/",
+			"pathVariables": {},
+			"preRequestScript": "",
+			"method": "GET",
+			"data": [
+				{
+					"key": "name",
+					"value": "My way",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "artist",
+					"value": "Frank Sinatra",
+					"type": "text",
+					"enabled": true
+				}
+			],
+			"dataMode": "params",
+			"name": "get songs",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1421835410521,
+			"version": 2,
+			"responses": [],
+			"tests": "",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"collectionId": "4b021242-4dec-ff83-3b5c-491af9672568",
+			"synced": false
+		},
+		{
+			"id": "e9673c18-ae2c-436d-f7dd-4889c005391e",
+			"headers": "",
+			"url": "localhost:3001/songs/new",
+			"preRequestScript": "",
+			"pathVariables": {},
+			"method": "POST",
+			"data": [
+				{
+					"key": "name",
+					"value": "My way",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "artist",
+					"value": "Frank Sinatra",
+					"type": "text",
+					"enabled": true
+				}
+			],
+			"dataMode": "params",
+			"version": 2,
+			"tests": "",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1421835494831,
+			"name": "set song my way",
+			"description": "",
+			"collectionId": "4b021242-4dec-ff83-3b5c-491af9672568",
+			"responses": [],
+			"synced": false
+		},
+		{
+			"id": "f4fa5cc5-0df3-c7f1-9d34-3473f068fe07",
+			"headers": "",
+			"url": "localhost:3001/songs/new",
+			"pathVariables": {},
+			"preRequestScript": "",
+			"method": "POST",
+			"data": [
+				{
+					"key": "name",
+					"value": "New York",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "artist",
+					"value": "Frank Sinatra, jr",
+					"type": "text",
+					"enabled": true
+				}
+			],
+			"dataMode": "params",
+			"name": "set song new york",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1421835588784,
+			"version": 2,
+			"responses": [],
+			"tests": "",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"collectionId": "4b021242-4dec-ff83-3b5c-491af9672568",
+			"synced": false
+		}
+	]
+}

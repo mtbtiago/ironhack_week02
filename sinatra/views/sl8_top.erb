@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Top <%= @limit %> movies</title>
+</head>
+<body>
+	<%= @limit %>
+<ol>
+<% i = 0 %>
+<% @movies.each do |movie| %>
+<li><%= movie.to_s %></li>
+<% i += 1 %>
+<% if i >= @limit.to_i %>
+<%	break %>
+<% end %>
+<% end %>
+</ol>
+</body>
+</html>
