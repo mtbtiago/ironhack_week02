@@ -12,50 +12,13 @@
 # 4. GET '/results' will get a "term" parameter, and will return the number of results for a search using that term.
 # 5. GET '/now' will print the current date and time. Because sometimes it's useful.
 
-require 'pstore'
-require 'ap'
+require_relative 'sl8_class'
 require 'sinatra'
+
+### main
 set :port, 3001
 set :bind, '0.0.0.0'
 
-class Movie < Struct.new(:id,:title,:rating,:year)
-
-  def to_s
-    "IMDB ID: #{id}. #{title}. Rating: #{rating}. Year: #{year}"
-  end
-end
-
-class SL8
-  attr_reader :movies
-
-  def initialize
-    @movies_pstore = PStore.new("movies_250.pstore")
-    @movies = {}
-    load_movies_pstore
-
-    # @movies.values.each do |movie|
-    #   ap movie.to_s
-    # end
-  end
-
-  private
-
-    def load_movies_pstore
-    @movies_pstore.transaction do
-      @movies_pstore.roots.each do |item|
-        @movies[item] = Movie.new(
-          item,
-          @movies_pstore[item][1].gsub(/\d{1,3}\.\n\s+/,""),
-          @movies_pstore[item][2],
-          @movies_pstore[item][3])
-      end
-      @movies_pstore.commit
-    end
-  end
-end
-
-
-### main
 sl8 = SL8.new
 
 get '/top' do
@@ -63,3 +26,57 @@ get '/top' do
   @limit = params[:limit] ||= 250
   erb :sl8_top
 end
+
+get '/rating' do
+  if params[:id]
+    movie = sl8.movie_by_id(params[:id])
+  elsif params[:name]
+    movie = sl8.movie_by_title(params[:name])
+  else
+    movie = sl8.null_movie
+  end
+  if movie.is_null
+    erb :sl8_not_found
+  elsif movie.rating < 5
+    redirect("/warning?title=#{movie.title}")
+  else
+    # redirect("/results&search=#{movie.title}")
+    redirect("/info?id=#{movie.id.to_s}")
+  end
+end
+
+# get '/rating' do
+#   movie = sl8.movie_by_id(params[:id])
+#   if movie.rating < 5
+#     # redirect("/warning&title=#{movie.title}")
+#     redirect("/warning?title="+"#{movie.title}")
+#   else
+#     # redirect('/now')
+#     redirect("/results?search=#{movie.title}")
+#   end
+# end
+
+get '/warning' do
+  @title = params[:title]
+  erb :sl8_warning
+end
+
+get '/info' do
+  @movie = sl8.movie_by_id(params[:id].to_s)
+  erb :sl8_info
+end
+
+get '/results' do
+  @search = params[:search]
+  @movies = sl8.movie_search(@search)
+  erb :sl8_results
+end
+
+get '/now' do
+  @date_str = Date.today.strftime('%A, %-d/%m/%Y')
+  erb :sl8_now
+end
+
+__END__
+
+no plus ultra
