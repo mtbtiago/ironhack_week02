@@ -1,0 +1,5 @@
+DROP TABLE IF EXISTS "shouts";
+CREATE TABLE [shouts] ([id] INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE, [message] TEXT, [user_id] INTEGER REFERENCES [users] ([id]), [created_at] DATETIME, [likes] INTEGER);
+DROP TABLE IF EXISTS "users";
+CREATE TABLE [users] ([id] INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE, [name] VARCHAR, [handle] VARCHAR, [password] VARCHAR);
+INSERT INTO "users" VALUES(1,'Manotlito Gafotas','@manolito','12345678901234567890');

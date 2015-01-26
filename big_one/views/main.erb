@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Shouter</title>
+</head>
+<body>
+	<header>
+	<div>Logged user: <%= @user.name %> (<%= @user.handle %>)</div>
+	</header>
+        <h1>Enter your shout</h1>
+        <form name="shout_form" action="/add_shout" method="post">
+            Text<input type="text" name="shout"/>
+            <input type="submit" value="Shout!"/>
+        </form>
+	<div></div>
+</body>
+</html>
